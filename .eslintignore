@@ -1,0 +1,6 @@
+.eslintrc.cjs
+postcss.config.cjs
+tailwind.config.cjs
+node_modules
+jsconfig.json
+build
