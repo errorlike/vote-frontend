@@ -1,18 +1,17 @@
-//todo add username and password state
-//add Onchange callback
-//add onSubmit callback
-//add axio login method
 
 import { useState } from 'react';
+import { useUserStore } from '../hooks/useUserStore';
 import authService from '../services/auth';
 const LoginForm = () => {
+  const { setUser } = useUserStore();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const user = await authService.login({ username, password });
-    console.log(user);
+    const loginUser = await authService.login({ username, password });
+    window.localStorage.setItem('loginUser', JSON.stringify(loginUser));
+    setUser(loginUser);
     setUsername('');
     setPassword('');
   };
@@ -51,6 +50,7 @@ const LoginForm = () => {
                 id='username'
                 className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
                 placeholder='Enter username'
+                value={username}
                 onChange={handleUsernameChange}
               />
             </div>
@@ -67,6 +67,7 @@ const LoginForm = () => {
                 id='password'
                 className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
                 placeholder='Enter password'
+                value={password}
                 onChange={handlePasswordChange}
               />
 
