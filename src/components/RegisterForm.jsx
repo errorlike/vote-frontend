@@ -1,4 +1,21 @@
+import { useState } from 'react';
+import authService from '../services/auth';
 const RegisterForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [matchingPassword, setMatchingPassword] = useState('');
+  const [age, setAge] = useState('');
+  const [email, setEmail] = useState('');
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    await authService.register({ username, password, matchingPassword, age, email });
+    setUsername('');
+    setPassword('');
+    setMatchingPassword('');
+    setAge('');
+    setEmail('');
+  };
   return (
     <section className='bg-white'>
       <div className='lg:grid lg:min-h-screen lg:grid-cols-12'>
@@ -34,10 +51,10 @@ const RegisterForm = () => {
               Welcome to Vote
             </h1>
 
-            <form action='#' className='mt-8 grid grid-cols-6 gap-6'>
+            <form onSubmit={onSubmit} className='mt-8 grid grid-cols-6 gap-6'>
               <div className='col-span-6 sm:col-span-3'>
                 <label
-                  htmlFor='username'
+                  htmlFor='Username'
                   className='block text-sm font-medium text-gray-700'
                 >
                   username
@@ -45,31 +62,35 @@ const RegisterForm = () => {
 
                 <input
                   type='text'
-                  id='username'
-                  name='first_name'
+                  id='Username'
+                  name='username'
+                  value={username}
                   className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+                  onChange={(event) => setUsername(event.target.value)}
                 />
               </div>
 
               <div className='col-span-4'>
                 <label
-                  htmlFor='Email'
+                  htmlFor='email'
                   className='block text-sm font-medium text-gray-700'
                 >
-                  Email
+                  email
                 </label>
 
                 <input
                   type='email'
-                  id='Email'
+                  id='email'
                   name='email'
+                  value={email}
+                  onChange={event => setEmail(event.target.value)}
                   className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
                 />
               </div>
 
               <div className='col-span-6 sm:col-span-3'>
                 <label
-                  htmlFor='password'
+                  htmlFor='Password'
                   className='block text-sm font-medium text-gray-700'
                 >
                   password
@@ -77,8 +98,11 @@ const RegisterForm = () => {
 
                 <input
                   type='password'
-                  id='password'
+                  id='Password'
                   name='password'
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)
+                  }
                   className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
                 />
               </div>
@@ -95,6 +119,24 @@ const RegisterForm = () => {
                   type='password'
                   id='PasswordConfirmation'
                   name='password_confirmation'
+                  value={matchingPassword}
+                  onChange={(event) => setMatchingPassword(event.target.value)}
+                  className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+                />
+              </div>
+              <div className='col-span-4'>
+                <label
+                  className='block text-sm font-medium text-gray-700'
+                >
+                  age
+                </label>
+
+                <input
+                  type='text'
+                  id='age'
+                  name='age'
+                  value={age}
+                  onChange={event => setAge(event.target.value)}
                   className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
                 />
               </div>
