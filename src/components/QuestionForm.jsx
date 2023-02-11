@@ -1,14 +1,21 @@
 import { useState } from 'react';
+import AddedQuestionOption from './AddedQuestionOption';
 import QuestionOption from './QuestionOption';
 
 const QuestionForm = () => {
   const [addedOptions, setAddedOptions] = useState(['hello', 'world']);
+  const [questionType, setQuestionType] = useState(1);
   const addNewOption = (OptionName) => {
     const found = addedOptions.find(addedOption => addedOption === OptionName);
-    if (found) {
+    if (!found) {
       setAddedOptions(addedOptions.concat(OptionName));
-    } 
+    }
     //todo add else alert
+  };
+  const handleOptionChanged = (event) => {
+    if (event.target.checked) {
+      setQuestionType(+event.target.value);
+    }
   };
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -33,6 +40,8 @@ const QuestionForm = () => {
                 type="radio"
                 name="questionType"
                 value={1}
+                checked={questionType === 1}
+                onChange={handleOptionChanged}
                 id="radio"
                 className="peer hidden [&:checked_+_label_svg]:block"
               />
@@ -66,6 +75,8 @@ const QuestionForm = () => {
                 name="questionType"
                 value={2}
                 id="multi"
+                checked={questionType === 2}
+                onChange={handleOptionChanged}
                 className="peer hidden [&:checked_+_label_svg]:block"
               />
 
@@ -94,7 +105,7 @@ const QuestionForm = () => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {addedOptions.length === 0 ? null : addedOptions.map(addedOption => <QuestionOption name={addedOption} key={addedOption} />)}
+        {addedOptions.length === 0 ? null : addedOptions.map(addedOption => <AddedQuestionOption name={addedOption} key={addedOption} />)}
         <QuestionOption createOption={addNewOption} />
         <div className="flex items-center justify-between">
           <button
