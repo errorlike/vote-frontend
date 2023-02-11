@@ -1,9 +1,15 @@
 import { useState } from 'react';
+import AddedQuestionForm from './AddedQuestionForm';
 import QuestionForm from './QuestionForm';
 
 const QuestionnaireForm = () => {
   const [name, setName] = useState('');
   const [duration, setDuration] = useState(0);
+  const [addedQuestionForms, setAddedQuestionForms] = useState([{
+    name: 'hhh',
+    questionType: 1,
+    questionOption: ['hell1', 'h323']
+  }]);
   return (
     <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
       <div className="mx-auto max-w-lg text-center">
@@ -18,6 +24,9 @@ const QuestionnaireForm = () => {
           <label htmlFor="duration">duration(minute)</label>
           <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} />
         </div>
+
+        {/* fixme has same radio group name  */}
+        {/* {addedQuestionForms.length === 0 ? null : addedQuestionForms.map(addedQuestionForm => <AddedQuestionForm data={addedQuestionForm} key={addedQuestionForm.name} />)} */}
         <QuestionForm />
       </form>
     </div>
