@@ -25,8 +25,7 @@ const QuestionnaireForm = () => {
           <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} />
         </div>
 
-        {/* fixme has same radio group name  */}
-        {/* {addedQuestionForms.length === 0 ? null : addedQuestionForms.map(addedQuestionForm => <AddedQuestionForm data={addedQuestionForm} key={addedQuestionForm.name} />)} */}
+        {addedQuestionForms.length === 0 ? null : addedQuestionForms.map((addedQuestionForm,index) => <AddedQuestionForm data={addedQuestionForm} index = {index} key={addedQuestionForm.name} />)}
         <QuestionForm />
       </form>
     </div>
