@@ -1,4 +1,7 @@
-const QuestionOption = ({ name, createOption }) => {
+import { useState } from 'react';
+//fixme option has save name id
+const QuestionOption = ({ createOption }) => {
+  const [name, setName] = useState('');
   return (
     <div className="relative">
       <input
@@ -6,13 +9,17 @@ const QuestionOption = ({ name, createOption }) => {
         id="optionName"
         placeholder="name"
         value={name}
+        onChange={(event) => setName(event.target.value)}
         className="w-full rounded-md border-gray-200 py-2.5 pr-10 shadow-sm sm:text-sm"
       />
 
       <span className="absolute inset-y-0 right-0 grid w-10 place-content-center">
-        <button onClick={createOption}
-          type="button"
-          className="rounded-full bg-blue-500 p-0.5 text-white hover:bg-blue-700"
+        <button onClick={() => {
+          createOption(name);
+          setName('');
+        }}
+        type="button"
+        className="rounded-full bg-blue-500 p-0.5 text-white hover:bg-blue-700"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

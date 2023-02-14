@@ -10,6 +10,13 @@ const QuestionnaireForm = () => {
     questionType: 1,
     questionOption: ['hell1', 'h323']
   }]);
+  const addNewQuestionForm = (newQuestionFrom) => {
+    const found = addedQuestionForms.find(addedQuestionForm => addedQuestionForm.name === newQuestionFrom.name);
+    if (!found) {
+      console.log();
+      setAddedQuestionForms(addedQuestionForms.concat(newQuestionFrom));
+    }
+  };
   return (
     <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
       <div className="mx-auto max-w-lg text-center">
@@ -25,8 +32,13 @@ const QuestionnaireForm = () => {
           <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} />
         </div>
 
-        {addedQuestionForms.length === 0 ? null : addedQuestionForms.map((addedQuestionForm,index) => <AddedQuestionForm data={addedQuestionForm} index = {index} key={addedQuestionForm.name} />)}
-        <QuestionForm />
+        {
+          addedQuestionForms.length === 0 ? null : addedQuestionForms.map((addedQuestionForm, index) => <AddedQuestionForm data={addedQuestionForm} index={index} key={addedQuestionForm.name}
+          />)}
+        <QuestionForm addNewQuestionForm={addNewQuestionForm} />
+        <button type='submit' className='btn  bg-primary'>
+          submit
+        </button>
       </form>
     </div>
 

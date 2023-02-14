@@ -2,9 +2,10 @@ import { useState } from 'react';
 import AddedQuestionOption from './AddedQuestionOption';
 import QuestionOption from './QuestionOption';
 
-const QuestionForm = () => {
+const QuestionForm = ({ addNewQuestionForm }) => {
   const [addedOptions, setAddedOptions] = useState(['hello', 'world']);
   const [questionType, setQuestionType] = useState(1);
+  const [name, setName] = useState('');
   const addNewOption = (OptionName) => {
     const found = addedOptions.find(addedOption => addedOption === OptionName);
     if (!found) {
@@ -29,6 +30,8 @@ const QuestionForm = () => {
             <input
               type="text"
               className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
+              value={name}
+              onChange={(event) => { setName(event.target.value); }}
               placeholder="name"
             />
           </div>
@@ -105,11 +108,16 @@ const QuestionForm = () => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {addedOptions.length === 0 ? null : addedOptions.map(addedOption => <AddedQuestionOption name={addedOption} key={addedOption} />)}
+        {addedOptions.length === 0 ? null : addedOptions.map((addedOption, index) => <AddedQuestionOption name={addedOption} index={index} key={addedOption} />)}
         <QuestionOption createOption={addNewOption} />
         <div className="flex items-center justify-between">
-          <button
-            className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
+          <button type='button' onClick={() => {
+            addNewQuestionForm({ name, questionType, questionOption: addedOptions });
+            setName('');
+            setQuestionType(1);
+            setAddedOptions([]);
+          }}
+          className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
             add
           </button>
         </div>
