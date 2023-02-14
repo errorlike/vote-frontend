@@ -1,9 +1,9 @@
-const AddedQuestionOption = ({ name }) => {
+const AddedQuestionOption = ({ name, index }) => {
   return (
     <div className="relative">
       <input
         type="text"
-        id="optionName"
+        id={`optionName${index}`}
         placeholder="name"
         readOnly
         value={name}
