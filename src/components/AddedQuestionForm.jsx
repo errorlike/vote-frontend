@@ -3,10 +3,6 @@ import AddedQuestionOption from './AddedQuestionOption';
 const AddedQuestionForm = ({ data, index }) => {
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-lg text-center">
-        <h1 className="text-2xl font-bold sm:text-3xl ">Question</h1>
-      </div>
-
       <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
         <div >
           <div className="relative" >
@@ -20,7 +16,7 @@ const AddedQuestionForm = ({ data, index }) => {
             />
           </div>
           <fieldset className="space-y-4" >
-            <legend className="sr-only">Question</legend>
+            <legend className="sr-only">{`addedQuestion${index}`}</legend>
 
             <div>
               <input
@@ -93,7 +89,7 @@ const AddedQuestionForm = ({ data, index }) => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {data.questionOption.length === 0 ? null : data.questionOption.map(addedOption => <AddedQuestionOption name={addedOption} key={addedOption} />)}
+        {data.questionOption.length === 0 ? null : data.questionOption.map(addedOption => <AddedQuestionOption name={addedOption.name} key={addedOption.name} />)}
       </div>
     </div>);
 };

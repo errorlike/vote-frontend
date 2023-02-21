@@ -3,13 +3,14 @@ import AddedQuestionOption from './AddedQuestionOption';
 import QuestionOption from './QuestionOption';
 
 const QuestionForm = ({ addNewQuestionForm }) => {
-  const [addedOptions, setAddedOptions] = useState(['hello', 'world']);
+  const [addedOptions, setAddedOptions] = useState([{ name: 'hello' }, { name: 'world' }]);
   const [questionType, setQuestionType] = useState(1);
   const [name, setName] = useState('');
   const addNewOption = (OptionName) => {
-    const found = addedOptions.find(addedOption => addedOption === OptionName);
-    if (!found) {
-      setAddedOptions(addedOptions.concat(OptionName));
+
+    const found = addedOptions.find(addedOption => addedOption.name === OptionName);
+    if (OptionName && !found) {
+      setAddedOptions(addedOptions.concat({ name: OptionName }));
     }
     //todo add else alert
   };
@@ -108,7 +109,7 @@ const QuestionForm = ({ addNewQuestionForm }) => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {addedOptions.length === 0 ? null : addedOptions.map((addedOption, index) => <AddedQuestionOption name={addedOption} index={index} key={addedOption} />)}
+        {addedOptions.length === 0 ? null : addedOptions.map((addedOption, index) => <AddedQuestionOption name={addedOption.name} index={index} key={addedOption.name} />)}
         <QuestionOption createOption={addNewOption} />
         <div className="flex items-center justify-between">
           <button type='button' onClick={() => {
@@ -117,7 +118,7 @@ const QuestionForm = ({ addNewQuestionForm }) => {
             setQuestionType(1);
             setAddedOptions([]);
           }}
-          className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
+            className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
             add
           </button>
         </div>

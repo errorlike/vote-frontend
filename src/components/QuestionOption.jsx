@@ -1,5 +1,4 @@
 import { useState } from 'react';
-//fixme option has save name id
 const QuestionOption = ({ createOption }) => {
   const [name, setName] = useState('');
   return (

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useFormsStore } from '../hooks/useFormsStore';
 import AddedQuestionForm from './AddedQuestionForm';
 import QuestionForm from './QuestionForm';
 
@@ -8,12 +9,19 @@ const QuestionnaireForm = () => {
   const [addedQuestionForms, setAddedQuestionForms] = useState([{
     name: 'hhh',
     questionType: 1,
-    questionOption: ['hell1', 'h323']
+    questionOption: [{ name: 'hell1' }, { name: 'h323' }]
   }]);
+  const createForm = useFormsStore(state => state.createForm);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createForm({ name, duration, questions: addedQuestionForms });
+    setName('');
+    setDuration(0);
+    setAddedQuestionForms([]);
+  };
   const addNewQuestionForm = (newQuestionFrom) => {
     const found = addedQuestionForms.find(addedQuestionForm => addedQuestionForm.name === newQuestionFrom.name);
     if (!found) {
-      console.log();
       setAddedQuestionForms(addedQuestionForms.concat(newQuestionFrom));
     }
   };
@@ -22,7 +30,7 @@ const QuestionnaireForm = () => {
       <div className="mx-auto max-w-lg text-center">
         <h1 className="text-2xl font-bold sm:text-3xl ">QuestionaireForm</h1>
       </div>
-      <form className='mx-auto mt-8 mb-0 max-w-md space-y-4'>
+      <form className='mx-auto mt-8 mb-0 max-w-md space-y-4' onSubmit={handleSubmit}>
         <div className='relative'>
           <label htmlFor="questionaireName">name</label>
           <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="text" id='questionaireName' value={name} onChange={(event) => setName(event.target.value)} />
@@ -30,6 +38,10 @@ const QuestionnaireForm = () => {
         <div className='relative'>
           <label htmlFor="duration">duration(minute)</label>
           <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} />
+        </div>
+
+        <div className="mx-auto max-w-lg text-center">
+          <h1 className="text-2xl font-bold sm:text-3xl ">addedQuestion</h1>
         </div>
 
         {
