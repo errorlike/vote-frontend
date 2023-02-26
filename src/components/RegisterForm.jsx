@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import authService from '../services/auth';
-import cover from '../assets/cover.jpg';
+import registerImg from '../assets/registerImg.jpg';
 const RegisterForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +24,7 @@ const RegisterForm = () => {
         <aside className='relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6'>
           <img
             alt='vote'
-            src={cover}
+            src={registerImg}
             className='absolute inset-0 h-full w-full object-cover'
           />
         </aside>
