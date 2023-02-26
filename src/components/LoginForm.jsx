@@ -1,9 +1,10 @@
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useUserStore } from '../hooks/useUserStore';
 import authService from '../services/auth';
 const LoginForm = () => {
-  const { setUser } = useUserStore();
+  const setUser = useUserStore(state => state.setUser);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -105,9 +106,9 @@ const LoginForm = () => {
 
           <p className='text-center text-sm text-gray-500'>
             No account?
-            <a className='underline' href=''>
-              Sign up
-            </a>
+            <Link className='underline' to='/register'>
+              register
+            </Link>
           </p>
         </form>
       </div>
