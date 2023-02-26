@@ -8,17 +8,17 @@ const AddedQuestionForm = ({ data, index }) => {
           <div className="relative" >
             <input
               type="text"
-              className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
+              className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm disabled:opacity-50 disabled:shadow  disabled:bg-gray-300"
               placeholder="name"
               value={data.name}
               readOnly
               disabled
             />
           </div>
-          <fieldset className="space-y-4" >
+          <fieldset className="space-y-4" disabled>
             <legend className="sr-only">{`addedQuestion${index}`}</legend>
 
-            <div>
+            <div >
               <input
                 type="radio"
                 name={`addedquestionTypedata${index}`}
@@ -26,13 +26,12 @@ const AddedQuestionForm = ({ data, index }) => {
                 checked={data.questionType === 1}
                 id={`radio${index}`}
                 className="peer hidden [&:checked_+_label_svg]:block"
-                readOnly
                 disabled
               />
 
               <label
                 htmlFor={`radio${index}`}
-                className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
+                className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 p-4 text-sm font-medium shadow-sm peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 opacity-50 bg-gray-300 "
               >
                 <div className="flex items-center gap-2">
                   <svg
@@ -60,13 +59,13 @@ const AddedQuestionForm = ({ data, index }) => {
                 value={2}
                 id={`multi${index}`}
                 checked={data.questionType === 2}
-                className="peer hidden [&:checked_+_label_svg]:block"
+                className="peer hidden [&:checked_+_label_svg]:block shadow-sm disabled:opacity-50"
                 readOnly
               />
 
               <label
                 htmlFor={`multi${index}`}
-                className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
+                className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 p-4 text-sm font-medium shadow-sm peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 opacity-50 bg-gray-300"
               >
                 <div className="flex items-center gap-2">
                   <svg

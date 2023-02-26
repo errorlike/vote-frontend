@@ -1,13 +1,13 @@
 const AddedQuestionOption = ({ name, index }) => {
   return (
-    <div className="relative">
+    <div className="relative ">
       <input
         type="text"
         id={`optionName${index}`}
         placeholder="name"
         readOnly
         value={name}
-        className="w-full rounded-md border-gray-200 py-2.5 pr-10 shadow-sm sm:text-sm"
+        className="w-full rounded-md border-gray-200 py-2.5 pr-10 shadow-sm sm:text-sm  disabled:opacity-50 disabled:shadow  disabled:bg-gray-300"
         disabled
       />
       {/* todo add remove button */}
