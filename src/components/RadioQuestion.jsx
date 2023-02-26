@@ -2,17 +2,15 @@ import { useState } from 'react';
 import RadioOption from './RadioOption';
 
 const RadioQuestion = ({ questionName, questionId, options }) => {
-  const [selectOption, setSelectOption] = useState(0);
+  const [selectOption, setSelectOption] = useState();
 
   const handleOptionChanged = (event) => {
-    if (event.target.checked) {
-      setSelectOption(+event.target.value);
-    }
+    setSelectOption(+event.target.value);
   };
   return (
     <div>
       <div className="divider"></div>
-      <h5 className="text-2xl font-normal leading-normal mt-0 mb-2 text-red-800">
+      <h5 className="text-2xl font-normal leading-normal mt-0 mb-2 text-purple-800">
         {questionName}
       </h5>
       {

@@ -109,7 +109,10 @@ const QuestionForm = ({ addNewQuestionForm }) => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {addedOptions.length === 0 ? null : addedOptions.map((addedOption, index) => <AddedQuestionOption name={addedOption.name} index={index} key={addedOption.name} />)}
+        {addedOptions.length === 0 ? null :
+          addedOptions.map((addedOption, index) => <AddedQuestionOption
+            name={addedOption.name} index={index}
+            key={addedOption.name} />)}
         <QuestionOption createOption={addNewOption} />
         <div className="flex items-center justify-between">
           <button type='button' onClick={() => {
@@ -117,8 +120,7 @@ const QuestionForm = ({ addNewQuestionForm }) => {
             setName('');
             setQuestionType(1);
             setAddedOptions([]);
-          }}
-            className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
+          }} className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
             add
           </button>
         </div>
