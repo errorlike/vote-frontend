@@ -1,12 +1,11 @@
-import axios from 'axios';
+import client from '../config/client';
 
-const baseUrl = 'http://localhost:8080/api/v1/auth';
 const login = async (loginObject) => {
-  const response = await axios.post(`${baseUrl}/login`, loginObject);
+  const response = await client.post('/login', loginObject);
   return response.data;
 };
 const register = async (registerObject) => {
-  const response = await axios.post(`${baseUrl}/register`, registerObject);
+  const response = await client.post('/register', registerObject);
   return response;
 };
 const authService = {
