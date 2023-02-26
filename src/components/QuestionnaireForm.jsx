@@ -37,12 +37,10 @@ const QuestionnaireForm = () => {
         </div>
         <div className='relative'>
           <label htmlFor="duration">duration(minute)</label>
-          <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} />
+          <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} min={1} />
         </div>
 
-        <div className="mx-auto max-w-lg text-center">
-          <h1 className="text-2xl font-bold sm:text-3xl ">addedQuestion</h1>
-        </div>
+        <h1 className=" pt-10 text-2xl font-bold sm:text-3xl mx-auto  max-w-lg text-center">AddedQuestion</h1>
 
         {
           addedQuestionForms.length === 0 ? null : addedQuestionForms.map((addedQuestionForm, index) => <AddedQuestionForm data={addedQuestionForm} index={index} key={addedQuestionForm.name}
