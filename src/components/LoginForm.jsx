@@ -1,10 +1,11 @@
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../hooks/useUserStore';
 import authService from '../services/auth';
 const LoginForm = () => {
   const setUser = useUserStore(state => state.setUser);
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -12,6 +13,7 @@ const LoginForm = () => {
     event.preventDefault();
     const loginUser = await authService.login({ username, password });
     window.localStorage.setItem('loginUser', JSON.stringify(loginUser));
+    navigate('/');
     setUser(loginUser);
     setUsername('');
     setPassword('');

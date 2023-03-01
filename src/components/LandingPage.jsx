@@ -13,7 +13,7 @@ const LandingPage = () => {
               Create New QuestionNaire
             </p>
             <Link to={'/questionnaireForm'}>
-              <button type='button' onClick={() => { console.log('hello'); }}
+              <button type='button'
                 className="mx-auto lg:mx-0 hover:underline btn-primary text-white-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline- focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
                 Create
               </button>

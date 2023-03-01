@@ -1,11 +1,15 @@
+import { Link } from 'react-router-dom';
+import { useUserStore } from '../hooks/useUserStore';
 
 const Navigation = () => {
+
+  const user = useUserStore(state => state.user);
   return (
     <header aria-label="Site Header" className="bg-white">
       <div
         className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
       >
-        <a className="block text-teal-600" href="/">
+        <Link className="block text-indigo-600" to="/">
           <span className="sr-only">Home</span>
           <svg
             className="h-8"
@@ -18,64 +22,35 @@ const Navigation = () => {
               fill="currentColor"
             />
           </svg>
-        </a>
+        </Link>
 
         <div className="flex flex-1 items-center justify-end md:justify-between">
           <nav aria-label="Site Nav" className="hidden md:block">
             <ul className="flex items-center gap-6 text-sm">
               <li>
-                <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
-                  forms
-                </a>
+                <Link className="text-gray-500 transition hover:text-gray-500/75 " to='/questionnaires'>
+                  Forms
+                </Link>
               </li>
 
-              <li>
-                <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
-                  Careers
-                </a>
-              </li>
-
-              <li>
-                <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
-                  History
-                </a>
-              </li>
-
-              <li>
-                <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
-                  Services
-                </a>
-              </li>
-
-              <li>
-                <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
-                  Projects
-                </a>
-              </li>
-
-              <li>
-                <a className="text-gray-500 transition hover:text-gray-500/75" href="/">
-                  Blog
-                </a>
-              </li>
             </ul>
           </nav>
 
-          <div className="flex items-center gap-4">
+          < div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
-              <a
-                className="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
-                href="/"
+              <Link
+                className="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
+                to="/login"
               >
                 Login
-              </a>
+              </Link>
 
-              <a
-                className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
-                href="/"
+              <Link
+                className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-indigo-600 transition hover:text-indigo-600/75 sm:block"
+                to='/register'
               >
                 Register
-              </a>
+              </Link>
             </div>
 
             <button
@@ -99,8 +74,9 @@ const Navigation = () => {
             </button>
           </div>
         </div>
+
       </div>
-    </header>
+    </header >
   );
 };
 
