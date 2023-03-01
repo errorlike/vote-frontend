@@ -1,17 +1,24 @@
 import axios from 'axios';
-let token = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbGlzb24gSGVybWFubiIsImlhdCI6MTY3Njk5MTc4NywiZXhwIjoxNjc2OTkzMjI3fQ.fVHX2R5uBheBD1x6uOGxgk2ULLcESWxBxN7cUqYKuOY';
-const setToken = (newToken) => {
-  token = `Bearer ${newToken}`;
+let accessToken;
+const setAccessToken = (newToken) => {
+  accessToken = `Bearer ${newToken}`;
 };
 const client = axios.create({
-  baseURL: 'http://localhost:8080/v1/api',
-  headers: { Authorization: token }
-
+  baseURL: 'http://localhost:8080/api/v1',
 });
 
-client.interceptors.request.use({
-
-}
+client.interceptors.request.use(
+  config => {
+    if (accessToken) {
+      config.headers['Authorization'] = accessToken;
+    }
+    return config;
+  },
+  error => Promise.reject(error)
 );
-export { setToken };
+
+client.interceptors.response.use(
+
+);
+export { setAccessToken };
 export default client;
