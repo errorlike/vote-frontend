@@ -1,9 +1,42 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../hooks/useUserStore';
 
 const Navigation = () => {
 
   const user = useUserStore(state => state.user);
+  const setUser = useUserStore(state => state.setUser);
+  const navigate = useNavigate();
+  const logout = () => {
+    window.localStorage.removeItem('loginUser');
+    setUser(null);
+    navigate('/login');
+  };
+
+  const loginPart = () => <div className="sm:flex sm:gap-4">
+    <Link
+      className="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
+      to="/login"
+    >
+      Login
+    </Link>
+    <Link
+      className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-indigo-600 transition hover:text-indigo-600/75 sm:block"
+      to='/register'
+    >
+      Register
+    </Link>
+  </div>;
+  const logoutPart = () => {
+    return <div className="sm:flex sm:gap-4">
+      <button
+        type='button'
+        className="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
+        onClick={logout}
+      >
+        logout
+      </button>
+    </div>;
+  };
   return (
     <header aria-label="Site Header" className="bg-white">
       <div
@@ -37,21 +70,7 @@ const Navigation = () => {
           </nav>
 
           < div className="flex items-center gap-4">
-            <div className="sm:flex sm:gap-4">
-              <Link
-                className="block rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-indigo-700"
-                to="/login"
-              >
-                Login
-              </Link>
-
-              <Link
-                className="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-indigo-600 transition hover:text-indigo-600/75 sm:block"
-                to='/register'
-              >
-                Register
-              </Link>
-            </div>
+            {user ? logoutPart() : loginPart()}
 
             <button
               className="block rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75 md:hidden"
