@@ -1,11 +1,6 @@
 import { Link } from 'react-router-dom';
-import useQuestionsStore from '../hooks/useQuestionsStore';
 
 const Questionnaire = ({ name, duration, id }) => {
-  const fetchQuestionsByFormId = useQuestionsStore(state => state.fetchQuestionsByFormId);
-  const onClick = () => {
-    fetchQuestionsByFormId(id);
-  };
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
@@ -13,7 +8,7 @@ const Questionnaire = ({ name, duration, id }) => {
         <p className='text-end'>{`duration:${duration}`}</p>
         <div className="card-actions justify-end">
           <Link to={`/questionnaireForm/${id}`}>
-            <button onClick={onClick} className="btn btn-primary" type='button'>start</button>
+            <button className="btn btn-primary" type='button'>start</button>
           </Link>
         </div>
       </div>
