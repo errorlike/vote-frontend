@@ -6,11 +6,7 @@ import QuestionForm from './QuestionForm';
 const QuestionnaireForm = () => {
   const [name, setName] = useState('');
   const [duration, setDuration] = useState(0);
-  const [addedQuestionForms, setAddedQuestionForms] = useState([{
-    name: 'hhh',
-    questionType: 1,
-    questionOption: [{ name: 'hell1' }, { name: 'h323' }]
-  }]);
+  const [addedQuestionForms, setAddedQuestionForms] = useState([]);
   const createForm = useFormsStore(state => state.createForm);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -20,8 +16,9 @@ const QuestionnaireForm = () => {
     setAddedQuestionForms([]);
   };
   const addNewQuestionForm = (newQuestionFrom) => {
-    const found = addedQuestionForms.find(addedQuestionForm => addedQuestionForm.name === newQuestionFrom.name);
-    if (!found) {
+    const questionName = newQuestionFrom.name;
+    const found = addedQuestionForms.find(addedQuestionForm => addedQuestionForm.name === questionName);
+    if (!found && questionName && questionName.length !== 0) {
       setAddedQuestionForms(addedQuestionForms.concat(newQuestionFrom));
     }
   };

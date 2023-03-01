@@ -88,7 +88,7 @@ const AddedQuestionForm = ({ data, index }) => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {data.questionOption.length === 0 ? null : data.questionOption.map(addedOption => <AddedQuestionOption name={addedOption.name} key={addedOption.name} />)}
+        {data.questionOptions.length === 0 ? null : data.questionOptions.map(addedOption => <AddedQuestionOption name={addedOption.name} key={addedOption.name} />)}
       </div>
     </div>);
 };

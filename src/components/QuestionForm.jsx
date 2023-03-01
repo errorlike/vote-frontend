@@ -3,14 +3,14 @@ import AddedQuestionOption from './AddedQuestionOption';
 import QuestionOption from './QuestionOption';
 
 const QuestionForm = ({ addNewQuestionForm }) => {
-  const [addedOptions, setAddedOptions] = useState([{ name: 'hello' }, { name: 'world' }]);
+  const [addedOptions, setAddedOptions] = useState([]);
   const [questionType, setQuestionType] = useState(1);
   const [name, setName] = useState('');
-  const addNewOption = (OptionName) => {
+  const addNewOption = (optionName) => {
 
-    const found = addedOptions.find(addedOption => addedOption.name === OptionName);
-    if (OptionName && !found) {
-      setAddedOptions(addedOptions.concat({ name: OptionName }));
+    const found = addedOptions.find(addedOption => addedOption.name === optionName);
+    if (optionName.length !== 0 && optionName && !found) {
+      setAddedOptions(addedOptions.concat({ name: optionName }));
     }
     //todo add else alert
   };
@@ -116,7 +116,7 @@ const QuestionForm = ({ addNewQuestionForm }) => {
         <QuestionOption createOption={addNewOption} />
         <div className="flex items-center justify-between">
           <button type='button' onClick={() => {
-            addNewQuestionForm({ name, questionType, questionOption: addedOptions });
+            addNewQuestionForm({ name, questionType, questionOptions: addedOptions });
             setName('');
             setQuestionType(1);
             setAddedOptions([]);
