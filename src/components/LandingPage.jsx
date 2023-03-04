@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
-import Navigation from './Navigation';
 const LandingPage = () => {
   return (
     <div className="leading-normal tracking-normal text-white gradient" >
       {/* Nav */}
-      <Navigation />
       <div className="pt-24">
         <div className="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
           {/* left col */}
