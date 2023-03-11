@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import LoginForm from './components/LoginForm';
 import Navigation from './components/Navigation';
@@ -14,7 +14,6 @@ function App() {
   const setUser = useUserStore(state => state.setUser);
   const user = useUserStore(state => state.user);
   const [loading, setLoading] = useState(true);
-  //fixme after token expiration  don't remove localStorage
   const loggedUserJSON = window.localStorage.getItem('loginUser');
   useEffect(() => {
     if (loggedUserJSON) {

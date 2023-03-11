@@ -32,7 +32,6 @@ client.interceptors.request.use(
   },
   error => Promise.reject(error)
 );
-//todo fix  infinite loop
 client.interceptors.response.use(
   response => {
     return response;
