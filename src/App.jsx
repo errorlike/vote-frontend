@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import ErrorPage from './components/ErrorPage';
 import LandingPage from './components/LandingPage';
 import LoginForm from './components/LoginForm';
 import Navigation from './components/Navigation';
@@ -40,6 +41,7 @@ function App() {
         <Route path='/questionnaires' element={user ? <Questionnaires /> : <Navigate replace={true} to={'/login'} />} />
         <Route path='/questionnaireForm' element={user ? <QuestionnaireForm /> : <Navigate replace={true} to={'/login'} />} />
         <Route path='/questionnaireForm/:id' element={<SurveyForm />} />
+        <Route path='*' element={<ErrorPage/>} />
       </Routes>
 
     </div >
