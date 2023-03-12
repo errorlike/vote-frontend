@@ -8,6 +8,13 @@ const clearstate = () => {
   refreshToken = null;
   setUser(null);
 };
+const changeStorge = (accessToken, refreshToken) => {
+  const loginUserJSON = localStorage.getItem('loginUser');
+  const loginUser = JSON.parse(loginUserJSON);
+  loginUser.accessToken = accessToken;
+  loginUser.refreshToken = refreshToken;
+  localStorage.setItem('loginUser', JSON.stringify(loginUser));
+};
 const setAccessToken = (newAccessToken) => {
   accessToken = `Bearer ${newAccessToken}`;
 };
@@ -47,6 +54,7 @@ client.interceptors.response.use(
           });
           accessToken = `Bearer ${response.data.accessToken}`;
           refreshToken = response.data.refreshToken;
+          changeStorge(response.data.accessToken, refreshToken);
           return client(originalConfig);
         } catch (error) {
           clearstate();
