@@ -1,9 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CHeckBoxOption from './CheckBoxOption';
 
-const CheckBoxQuestion = ({ questionName, questionId, options }) => {
+const CheckBoxQuestion = ({ questionName, questionId, options, setAnswerStates, answerStates }) => {
   const [checkedIds, setCheckedIds] = useState([]);
+  useEffect(() => {
+    if (checkedIds.length !== 0) {
+
+      if (!answerStates.find(answerState => answerState.questionId === questionId)) {
+        setAnswerStates(answerStates
+          .concat({
+            questionId,
+            isAnswered: true,
+            selectedIds: checkedIds
+          }));
+      } else {
+        setAnswerStates(answerStates
+          .map(answerState => answerState.questionId === questionId
+            ? { ...answerState, selectedIds: checkedIds }
+            : answerState));
+      }
+    }
+  }, [checkedIds]);
   const handleCheckBoxChanged = (event) => {
+    event.preventDefault();
     const value = +event.target.value;
     const isChecked = event.target.checked;
     if (isChecked) {

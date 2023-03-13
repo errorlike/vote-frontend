@@ -1,31 +1,46 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCurrentParticipationsStore } from '../hooks/useCurrentParticipationsStore';
+import { useParticipationResultStore } from '../hooks/useParticipationResultStore';
 import useQuestionsStore from '../hooks/useQuestionsStore';
+import participationService from '../services/participation';
 import CheckBoxQuestion from './CheckBoxQuestion';
 import RadioQuestion from './RadioQuestion';
 
 const SurveyForm = () => {
-  const id = +useParams().id;
+  const formId = +useParams().id;
   const fetchQuestionsByFormId = useQuestionsStore(state => state.fetchQuestionsByFormId);
+  const createNewParicipation = useCurrentParticipationsStore(state => state.createNewParicipation);
+  const navigate = useNavigate();
+  const createResult = useParticipationResultStore(state => state.createResult);
+
   useEffect(() => {
-    fetchQuestionsByFormId(id);
+    fetchQuestionsByFormId(formId);
   }, []);
+
   const questions = useQuestionsStore(state => state.questions);
   const radioQuestions = questions.filter(question => question.questionType === 1);
   const checkboxQuestions = questions.filter(question => question.questionType === 2);
-  const [selectedId, setSelectId] = useState([]);
-  // get question
-  //questionanme 
-  //qustionOption => map radiotype and checkbox type
-  //submit select options  Need type?
-  // manytomany 
+  const [answerStates, setAnswerStates] = useState([]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (questions.length > answerStates.length) {
+      // todo Alert error
+    } else {
+      const selectedOptionIds = answerStates.flatMap(answerState => answerState.selectedIds);
+      const createdParticipation = await participationService.create(formId);
+      createNewParicipation({ ...createdParticipation, formId });
+      createResult(createdParticipation.id, selectedOptionIds);
+      navigate('/');
+    }
+  };
 
+  // console.log(answerStates);
   return (
     <div className="mx-auto max-w-screen-sm px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl">
-        <form className="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl">
+        <form className="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl" onSubmit={handleSubmit}>
           <h3 className="text-4xl font-normal leading-normal mt-0 mb-2 text-pink-800">
-
           </h3>
           {radioQuestions === 0 ? null :
             radioQuestions
@@ -33,7 +48,10 @@ const SurveyForm = () => {
                 questionName={radioQuestion.name}
                 questionId={radioQuestion.id}
                 key={radioQuestion.id}
-                options={radioQuestion.questionOptions} />
+                options={radioQuestion.questionOptions}
+                setAnswerStates={setAnswerStates}
+                answerStates={answerStates}
+              />
               )}
           {checkboxQuestions === 0 ? null :
             checkboxQuestions
@@ -42,6 +60,8 @@ const SurveyForm = () => {
                 questionId={checkboxQuestion.id}
                 key={checkboxQuestion.id}
                 options={checkboxQuestion.questionOptions}
+                setAnswerStates={setAnswerStates}
+                answerStates={answerStates}
               />)}
           <button
             type="submit"
@@ -52,6 +72,7 @@ const SurveyForm = () => {
         </form>
       </div>
     </div>
+
   );
 };
 export default SurveyForm;

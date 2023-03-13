@@ -10,7 +10,6 @@ const Questionnaires = () => {
   const [loading, setLoading] = useState(true);
   const forms = useFormsStore(state => state.forms);
   const userParticipations = useCurrentParticipationsStore(state => state.userParticipations);
-  console.log(userParticipations);
   const getAll = useCurrentParticipationsStore(state => state.getAll);
   useEffect(() => {
     initForms();
@@ -32,7 +31,7 @@ const Questionnaires = () => {
         name={form.name}
         duration={form.duration}
         key={form.id}
-        id={form.id}
+        formId={form.id}
         isParticipate={attendedFormId ? attendedFormId.includes(form.id) : false}
       />)}
     </div>
