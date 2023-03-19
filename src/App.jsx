@@ -7,6 +7,7 @@ import Navigation from './components/Navigation';
 import QuestionnaireForm from './components/QuestionnaireForm';
 import Questionnaires from './components/Questionnaires';
 import RegisterForm from './components/RegisterForm';
+import SureyFormResult from './components/SureyFormResult';
 import SurveyForm from './components/SurveyForm';
 import { setAccessToken, setRefreshToken, setSetUser } from './config/client';
 import { useUserStore } from './hooks/useUserStore';
@@ -41,7 +42,8 @@ function App() {
         <Route path='/questionnaires' element={user ? <Questionnaires /> : <Navigate replace={true} to={'/login'} />} />
         <Route path='/questionnaireForm' element={user ? <QuestionnaireForm /> : <Navigate replace={true} to={'/login'} />} />
         <Route path='/questionnaireForm/:id' element={<SurveyForm />} />
-        <Route path='*' element={<ErrorPage/>} />
+        <Route path='/questionnaireForm/:id/result' element={<SureyFormResult />} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
 
     </div >

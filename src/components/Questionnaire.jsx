@@ -9,9 +9,9 @@ const Questionnaire = ({ name, duration, formId, isParticipate }) => {
         <div className="card-actions justify-end">
           {
             isParticipate ?
-              <Link to={'/'}>
+              <Link to={`/questionnaireForm/${formId}/result`}>
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-accent"
                   type='button'
                 >view</button>
               </Link>
