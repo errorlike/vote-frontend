@@ -24,8 +24,7 @@ const setRefreshToken = (newRefreshToken) => {
 const setSetUser = (fn) => {
   setUser = fn;
 };
-const baseURL = 'http://localhost:8080/api/v1';
-
+const baseURL = import.meta.env.VITE_BACKEND_URL;
 const client = axios.create({
   baseURL
 });
