@@ -5,7 +5,8 @@ const Questionnaire = ({ name, duration, formId, isParticipate }) => {
     <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
         <h2 className="card-title">{name}</h2>
-        <p className='text-end'>{`duration:${duration} minute`}</p>
+        <p className='text-end'>{`
+        duration:${Math.floor(duration / 60)}m${duration - Math.floor(duration / 60)} s`}</p>
         <div className="card-actions justify-end">
           {
             isParticipate ?

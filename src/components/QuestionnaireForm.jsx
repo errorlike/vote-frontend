@@ -5,14 +5,41 @@ import QuestionForm from './QuestionForm';
 
 const QuestionnaireForm = () => {
   const [name, setName] = useState('');
-  const [duration, setDuration] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [second, setSecond] = useState(0);
   const [addedQuestionForms, setAddedQuestionForms] = useState([]);
+  const [errors, setErrors] = useState({});
   const createForm = useFormsStore(state => state.createForm);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    createForm({ name, duration, questions: addedQuestionForms });
+    if (!minute && !second) {
+      setErrors({
+        ...errors,
+        duration: 'Time and seconds cannot both be 0 at the same time.'
+      });
+      return;
+    }
+    setErrors(preErrors => ({ ...preErrors, duration: '' }));
+    if (addedQuestionForms.length === 0) {
+      setErrors(preErrors => ({
+        ...preErrors,
+        addedQuestionForms: 'Please add at least one form.'
+      }));
+      return;
+    }
+    setErrors({
+      ...errors,
+      addedQuestionForms: ''
+    });
+    createForm({
+      name,
+      duration: minute * 60 + second,
+      questions: addedQuestionForms
+    });
     setName('');
-    setDuration(0);
+    setMinute(0);
+    setSecond(0);
     setAddedQuestionForms([]);
   };
   const addNewQuestionForm = (newQuestionFrom) => {
@@ -30,14 +57,42 @@ const QuestionnaireForm = () => {
       <form className='mx-auto mt-8 mb-0 max-w-md space-y-4' onSubmit={handleSubmit}>
         <div className='relative'>
           <label htmlFor="questionaireName">name</label>
-          <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="text" id='questionaireName' value={name} onChange={(event) => setName(event.target.value)} />
+          <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
+            type="text"
+            id='questionaireName'
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            required
+            minLength={1}
+          />
         </div>
-        <div className='relative'>
-          <label htmlFor="duration">duration(minute)</label>
-          <input className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm' type="number" id='duration' value={duration} onChange={(event) => { setDuration(event.target.value); }} min={1} />
+        <div>countdown:</div>
+        {errors.duration ? <p className="text-red-500 text-sm mt-1">{errors.duration}</p> : null}
+        <div className='relative flex justify-center'>
+          <label htmlFor="minute">minute</label>
+          <input className='ml-2 w-1/2 rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
+            type="number"
+            id='minute'
+            value={minute}
+            onChange={(event) => { setMinute(+event.target.value); }}
+            min={0}
+          />
+
+        </div>
+        <div className='relative flex justify-center'>
+          <label htmlFor="second">second</label>
+          <input className='ml-2 w-1/2 rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
+            type="number"
+            id='second'
+            value={second}
+            onChange={(event) => { setSecond(+event.target.value); }}
+            min={0}
+          />
+
         </div>
 
         <h1 className=" pt-10 text-2xl font-bold sm:text-3xl mx-auto  max-w-lg text-center">AddedQuestion</h1>
+        {errors.addedQuestionForms ? <p className="text-red-500 text-sm mt-1">{errors.addedQuestionForms}</p> : null}
 
         {
           addedQuestionForms.length === 0 ? null : addedQuestionForms.map((addedQuestionForm, index) => <AddedQuestionForm data={addedQuestionForm} index={index} key={addedQuestionForm.name}
