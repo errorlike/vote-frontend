@@ -1,18 +1,24 @@
+import { trim, isEmpty } from 'ramda';
 import { useState } from 'react';
 import AddedQuestionOption from './AddedQuestionOption';
 import QuestionOption from './QuestionOption';
-
-const QuestionForm = ({ addNewQuestionForm }) => {
+const QuestionForm = ({ addNewQuestionForm, errors, setErrors }) => {
   const [addedOptions, setAddedOptions] = useState([]);
   const [questionType, setQuestionType] = useState(1);
   const [name, setName] = useState('');
   const addNewOption = (optionName) => {
 
     const found = addedOptions.find(addedOption => addedOption.name === optionName);
-    if (optionName.length !== 0 && optionName && !found) {
-      setAddedOptions(addedOptions.concat({ name: optionName }));
+    if (found) {
+      setErrors(preErrors => ({ ...preErrors, optionName: 'Please ensure that there are no duplicate names.' }));
+      return;
     }
-    //todo add else alert
+    if (isEmpty(trim(optionName))) {
+      setErrors(preErrors => ({ ...preErrors, optionName: 'Option name cannot be empty' }));
+      return;
+    }
+    setAddedOptions(addedOptions.concat({ name: optionName }));
+    setErrors(preErrors => ({ ...preErrors, optionName: '' }));
   };
   const handleOptionChanged = (event) => {
     if (event.target.checked) {
@@ -24,8 +30,8 @@ const QuestionForm = ({ addNewQuestionForm }) => {
       <div className="mx-auto max-w-lg text-center">
         <h1 className="text-2xl font-bold sm:text-3xl ">Question</h1>
       </div>
-
       <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
+        {errors.questionName ? <span className="text-red-500 text-sm mt-1">{errors.questionName}</span> : null}
         <div>
           <div className="relative">
             <input
@@ -109,17 +115,19 @@ const QuestionForm = ({ addNewQuestionForm }) => {
           </fieldset>
         </div>
         <div>QuestionOption</div>
-        {addedOptions.length === 0 ? null :
-          addedOptions.map((addedOption, index) => <AddedQuestionOption
-            name={addedOption.name} index={index}
+        {addedOptions.length === 0 ? null : addedOptions.map((addedOption, index) =>
+          <AddedQuestionOption
+            name={addedOption.name}
+            index={index}
             key={addedOption.name} />)}
-        <QuestionOption createOption={addNewOption} />
+        <QuestionOption createOption={addNewOption} errors={errors} />
         <div className="flex items-center justify-between">
           <button type='button' onClick={() => {
-            addNewQuestionForm({ name, questionType, questionOptions: addedOptions });
-            setName('');
-            setQuestionType(1);
-            setAddedOptions([]);
+            if (addNewQuestionForm({ name, questionType, questionOptions: addedOptions })) {
+              setName('');
+              setQuestionType(1);
+              setAddedOptions([]);
+            }
           }} className="ml-3 inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
             add
           </button>

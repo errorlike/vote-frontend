@@ -1,3 +1,4 @@
+import { isEmpty, trim } from 'ramda';
 import { useState } from 'react';
 import { useFormsStore } from '../hooks/useFormsStore';
 import AddedQuestionForm from './AddedQuestionForm';
@@ -28,10 +29,7 @@ const QuestionnaireForm = () => {
       }));
       return;
     }
-    setErrors({
-      ...errors,
-      addedQuestionForms: ''
-    });
+    
     createForm({
       name,
       duration: minute * 60 + second,
@@ -42,13 +40,30 @@ const QuestionnaireForm = () => {
     setSecond(0);
     setAddedQuestionForms([]);
   };
-  const addNewQuestionForm = (newQuestionFrom) => {
-    const questionName = newQuestionFrom.name;
+  const addNewQuestionForm = (newQuestionForm) => {
+    const questionName = newQuestionForm.name;
     const found = addedQuestionForms.find(addedQuestionForm => addedQuestionForm.name === questionName);
-    if (!found && questionName && questionName.length !== 0) {
-      setAddedQuestionForms(addedQuestionForms.concat(newQuestionFrom));
+    if (found) {
+      setErrors(preErrors => ({ ...preErrors, questionName: 'Please ensure that there are no duplicate names.' }));
+      return;
     }
+    if (isEmpty(trim(questionName))) {
+      setErrors(preErrors => ({ ...preErrors, questionName: 'Question name cannot be empty' }));
+      return;
+    }
+    if (isEmpty(newQuestionForm.questionOptions)) {
+      setErrors(preErrors => ({ ...preErrors, questionName: 'Please add at least one option' }));
+      return;
+    }
+    setAddedQuestionForms(addedQuestionForms.concat(newQuestionForm));
+    setErrors(preErrors => ({ ...preErrors, questionName: '' }));
+    setErrors(preErrors => ({
+      ...preErrors,
+      addedQuestionForms: ''
+    }));
+    return true;
   };
+
   return (
     <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
       <div className="mx-auto max-w-lg text-center">
@@ -97,7 +112,11 @@ const QuestionnaireForm = () => {
         {
           addedQuestionForms.length === 0 ? null : addedQuestionForms.map((addedQuestionForm, index) => <AddedQuestionForm data={addedQuestionForm} index={index} key={addedQuestionForm.name}
           />)}
-        <QuestionForm addNewQuestionForm={addNewQuestionForm} />
+        <QuestionForm
+          addNewQuestionForm={addNewQuestionForm}
+          setErrors={setErrors}
+          errors={errors}
+        />
         <button type='submit' className='btn  bg-primary'>
           submit
         </button>
